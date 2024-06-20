@@ -17,7 +17,7 @@ namespace Inventory_System
         readonly DBConnection db = new DBConnection();
         private void DashboardItems_Load(object sender, EventArgs e)
         {
-            bunifuDataGridView1.DataSource = db.GetData("Select Material,Material_Category AS [Material Category],Unit,Avilable_Quantity AS [Available Quantity] from Stock");
+            bunifuDataGridView1.DataSource = db.GetData("Select Material,Material_Category ,Unit,Avilable_Quantity from Stock");
 
             var col = new DataGridViewMergedTextBoxColumn();
 
@@ -35,7 +35,7 @@ namespace Inventory_System
             {
                 string query1 = "SELECT COUNT(Material) FROM Materials";
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand(query1, db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand(query1, db.con);
                 Int32 rowscount = Convert.ToInt32(db.cmd.ExecuteScalar());
                 db.cmd.Dispose();
                 db.con.Close();
@@ -50,7 +50,7 @@ namespace Inventory_System
             {
                 string query11 = "SELECT COUNT(*) FROM Materials_IN";
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand(query11, db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand(query11, db.con);
                 Int32 rowscount = Convert.ToInt32(db.cmd.ExecuteScalar());
                 db.cmd.Dispose();
                 db.con.Close();
@@ -64,7 +64,7 @@ namespace Inventory_System
             {
                 string query11 = "SELECT COUNT(*) FROM Materials_OUT";
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand(query11, db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand(query11, db.con);
                 Int32 rowscount = Convert.ToInt32(db.cmd.ExecuteScalar());
                 db.cmd.Dispose();
                 db.con.Close();
@@ -78,7 +78,7 @@ namespace Inventory_System
             {
                 string query11 = "SELECT COUNT(Material) FROM Stock";
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand(query11, db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand(query11, db.con);
                 Int32 rowscount = Convert.ToInt32(db.cmd.ExecuteScalar());
                 db.cmd.Dispose();
                 db.con.Close();

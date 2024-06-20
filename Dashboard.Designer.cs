@@ -44,7 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btn_logout = new Guna.UI2.WinForms.Guna2Button();
             this.bunifuLabel1 = new Bunifu.UI.WinForms.BunifuLabel();
-            this.btn_backup_restore = new Guna.UI2.WinForms.Guna2Button();
             this.btn_finalstock = new Guna.UI2.WinForms.Guna2Button();
             this.btn_addmaterials = new Guna.UI2.WinForms.Guna2Button();
             this.btn_materialsOUT = new Guna.UI2.WinForms.Guna2Button();
@@ -129,7 +128,6 @@
             this.bunifuPanel1.Controls.Add(this.bunifuPanel2);
             this.bunifuPanel1.Controls.Add(this.btn_logout);
             this.bunifuPanel1.Controls.Add(this.bunifuLabel1);
-            this.bunifuPanel1.Controls.Add(this.btn_backup_restore);
             this.bunifuPanel1.Controls.Add(this.btn_finalstock);
             this.bunifuPanel1.Controls.Add(this.btn_addmaterials);
             this.bunifuPanel1.Controls.Add(this.btn_materialsOUT);
@@ -163,7 +161,7 @@
             this.btn_dashboard.Image = global::Inventory_System.Properties.Resources.icons8_dashboard_32;
             this.btn_dashboard.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btn_dashboard.ImageSize = new System.Drawing.Size(25, 25);
-            this.btn_dashboard.Location = new System.Drawing.Point(430, 17);
+            this.btn_dashboard.Location = new System.Drawing.Point(451, 17);
             this.btn_dashboard.Name = "btn_dashboard";
             this.btn_dashboard.PressedColor = System.Drawing.Color.Maroon;
             this.btn_dashboard.ShadowDecoration.Parent = this.btn_dashboard;
@@ -260,7 +258,7 @@
             this.btn_logout.HoverState.Parent = this.btn_logout;
             this.btn_logout.Image = global::Inventory_System.Properties.Resources.icons8_logout_481;
             this.btn_logout.ImageSize = new System.Drawing.Size(35, 35);
-            this.btn_logout.Location = new System.Drawing.Point(807, 17);
+            this.btn_logout.Location = new System.Drawing.Point(766, 17);
             this.btn_logout.Name = "btn_logout";
             this.btn_logout.PressedColor = System.Drawing.Color.Maroon;
             this.btn_logout.ShadowDecoration.Parent = this.btn_logout;
@@ -290,34 +288,6 @@
             this.bunifuToolTip1.SetToolTipIcon(this.bunifuLabel1, null);
             this.bunifuToolTip1.SetToolTipTitle(this.bunifuLabel1, "");
             // 
-            // btn_backup_restore
-            // 
-            this.btn_backup_restore.Animated = true;
-            this.btn_backup_restore.BackColor = System.Drawing.Color.White;
-            this.btn_backup_restore.BorderColor = System.Drawing.Color.White;
-            this.btn_backup_restore.BorderRadius = 5;
-            this.btn_backup_restore.BorderThickness = 1;
-            this.btn_backup_restore.CheckedState.Parent = this.btn_backup_restore;
-            this.btn_backup_restore.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_backup_restore.CustomImages.Parent = this.btn_backup_restore;
-            this.btn_backup_restore.FillColor = System.Drawing.Color.White;
-            this.btn_backup_restore.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_backup_restore.ForeColor = System.Drawing.Color.White;
-            this.btn_backup_restore.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(81)))), ((int)(((byte)(81)))));
-            this.btn_backup_restore.HoverState.Parent = this.btn_backup_restore;
-            this.btn_backup_restore.Image = global::Inventory_System.Properties.Resources.icons8_database_backup_24;
-            this.btn_backup_restore.ImageSize = new System.Drawing.Size(25, 25);
-            this.btn_backup_restore.Location = new System.Drawing.Point(744, 17);
-            this.btn_backup_restore.Name = "btn_backup_restore";
-            this.btn_backup_restore.PressedColor = System.Drawing.Color.Maroon;
-            this.btn_backup_restore.ShadowDecoration.Parent = this.btn_backup_restore;
-            this.btn_backup_restore.Size = new System.Drawing.Size(40, 47);
-            this.btn_backup_restore.TabIndex = 18;
-            this.bunifuToolTip1.SetToolTip(this.btn_backup_restore, "");
-            this.bunifuToolTip1.SetToolTipIcon(this.btn_backup_restore, null);
-            this.bunifuToolTip1.SetToolTipTitle(this.btn_backup_restore, "Database Backup & Restore");
-            this.btn_backup_restore.Click += new System.EventHandler(this.Btn_backup_restore_Click);
-            // 
             // btn_finalstock
             // 
             this.btn_finalstock.Animated = true;
@@ -336,7 +306,7 @@
             this.btn_finalstock.Image = global::Inventory_System.Properties.Resources.icons8_stock_30;
             this.btn_finalstock.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btn_finalstock.ImageSize = new System.Drawing.Size(25, 25);
-            this.btn_finalstock.Location = new System.Drawing.Point(678, 17);
+            this.btn_finalstock.Location = new System.Drawing.Point(699, 17);
             this.btn_finalstock.Name = "btn_finalstock";
             this.btn_finalstock.PressedColor = System.Drawing.Color.Maroon;
             this.btn_finalstock.ShadowDecoration.Parent = this.btn_finalstock;
@@ -366,7 +336,7 @@
             this.btn_addmaterials.Image = global::Inventory_System.Properties.Resources.icons8_add_properties_26;
             this.btn_addmaterials.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btn_addmaterials.ImageSize = new System.Drawing.Size(25, 25);
-            this.btn_addmaterials.Location = new System.Drawing.Point(492, 17);
+            this.btn_addmaterials.Location = new System.Drawing.Point(513, 17);
             this.btn_addmaterials.Name = "btn_addmaterials";
             this.btn_addmaterials.PressedColor = System.Drawing.Color.Maroon;
             this.btn_addmaterials.ShadowDecoration.Parent = this.btn_addmaterials;
@@ -395,7 +365,7 @@
             this.btn_materialsOUT.HoverState.Parent = this.btn_materialsOUT;
             this.btn_materialsOUT.Image = global::Inventory_System.Properties.Resources.icons8_sign_in_301;
             this.btn_materialsOUT.ImageSize = new System.Drawing.Size(30, 30);
-            this.btn_materialsOUT.Location = new System.Drawing.Point(617, 17);
+            this.btn_materialsOUT.Location = new System.Drawing.Point(638, 17);
             this.btn_materialsOUT.Name = "btn_materialsOUT";
             this.btn_materialsOUT.PressedColor = System.Drawing.Color.Maroon;
             this.btn_materialsOUT.ShadowDecoration.Parent = this.btn_materialsOUT;
@@ -423,7 +393,7 @@
             this.btn_materialsIN.HoverState.Parent = this.btn_materialsIN;
             this.btn_materialsIN.Image = global::Inventory_System.Properties.Resources.icons8_sign_in_30;
             this.btn_materialsIN.ImageSize = new System.Drawing.Size(30, 30);
-            this.btn_materialsIN.Location = new System.Drawing.Point(554, 17);
+            this.btn_materialsIN.Location = new System.Drawing.Point(575, 17);
             this.btn_materialsIN.Name = "btn_materialsIN";
             this.btn_materialsIN.PressedColor = System.Drawing.Color.Maroon;
             this.btn_materialsIN.ShadowDecoration.Parent = this.btn_materialsIN;
@@ -476,7 +446,6 @@
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private Bunifu.UI.WinForms.BunifuPanel bunifuPanel1;
         private Guna.UI2.WinForms.Guna2Button btn_logout;
-        private Guna.UI2.WinForms.Guna2Button btn_backup_restore;
         private Guna.UI2.WinForms.Guna2Button btn_finalstock;
         private Guna.UI2.WinForms.Guna2Button btn_addmaterials;
         private Guna.UI2.WinForms.Guna2Button btn_materialsOUT;

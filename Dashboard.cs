@@ -66,12 +66,6 @@ namespace Inventory_System
             WinAPI.AnimateWindow(this.Handle, 500, WinAPI.BLEND);
         }
 
-        private void Btn_backup_restore_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new DBBackup_Restore());
-            WinAPI.AnimateWindow(this.Handle, 500, WinAPI.BLEND);
-        }
-
         [Obsolete]
         private void Btn_finalstock_Click(object sender, EventArgs e)
         {

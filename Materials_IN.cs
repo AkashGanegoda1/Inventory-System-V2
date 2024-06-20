@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
+using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
@@ -20,7 +22,7 @@ namespace Inventory_System
             try
             {
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand("SELECT DISTINCT Material FROM Materials", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("SELECT DISTINCT Material FROM Materials", db.con);
                 db.dr = db.cmd.ExecuteReader();
                 while (db.dr.Read())
                 {
@@ -59,7 +61,7 @@ namespace Inventory_System
             try
             {
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand("Insert into Materials_IN values('" + guna2DateTimePicker1.Value.ToString("MM/dd/yyyy") + "','" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_quantity.Text + "')", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("Insert into Materials_IN values('" + guna2DateTimePicker1.Value.ToString("MM/dd/yyyy") + "','" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_quantity.Text + "')", db.con);
                 int i = db.cmd.ExecuteNonQuery();
                 db.con.Close();
                 if (i == 1)
@@ -80,12 +82,12 @@ namespace Inventory_System
             }
 
             db.con.Open();
-            db.cmd = new System.Data.SqlClient.SqlCommand("select * from Stock where Material_Category='" + cmb_mcategory.Text + "'", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("select * from Stock where Material_Category='" + cmb_mcategory.Text + "'", db.con);
             db.dr = db.cmd.ExecuteReader();
             if (db.dr.HasRows)
             {
                 db.dr.Close();
-                db.cmd = new System.Data.SqlClient.SqlCommand("update Stock set Avilable_Quantity=Avilable_Quantity+'" + txt_quantity.Text + "' where Material_Category='" + cmb_mcategory.Text + "'", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("update Stock set Avilable_Quantity=Avilable_Quantity+'" + txt_quantity.Text + "' where Material_Category='" + cmb_mcategory.Text + "'", db.con);
                 db.cmd.ExecuteNonQuery();
             }
             else
@@ -93,7 +95,7 @@ namespace Inventory_System
                 try
                 {
                     db.dr.Close();
-                    db.cmd = new System.Data.SqlClient.SqlCommand("insert into Stock(Material,Material_Category,Unit,Avilable_Quantity) values ('" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_quantity.Text + "')", db.con);
+                    db.cmd = new System.Data.SQLite.SQLiteCommand("insert into Stock(Material,Material_Category,Unit,Avilable_Quantity) values ('" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_quantity.Text + "')", db.con);
                     db.cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -107,7 +109,7 @@ namespace Inventory_System
         }
         public void Pro_Load()
         {
-            bunifuDataGridView2.DataSource = db.GetData("Select Date,Material,Material_Category AS [Material Category],Unit,Quantity from Materials_IN");
+            bunifuDataGridView2.DataSource = db.GetData("Select Date,Material,Material_Category,Unit,Quantity from Materials_IN");
         }
 
         private void Txt_quantity_KeyPress(object sender, KeyPressEventArgs e)
@@ -125,7 +127,7 @@ namespace Inventory_System
 
         private void Cmb_material_SelectedIndexChanged(object sender, EventArgs e)
         {
-            db.cmd = new System.Data.SqlClient.SqlCommand("SELECT Material_Category FROM Materials WHERE Material ='" + cmb_material.Text + "'", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("SELECT Material_Category FROM Materials WHERE Material ='" + cmb_material.Text + "'", db.con);
             db.con.Open();
             db.dr = db.cmd.ExecuteReader();
             cmb_mcategory.Items.Clear();
@@ -148,9 +150,42 @@ namespace Inventory_System
 
         private void BunifuDataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            guna2DateTimePicker1.Text = bunifuDataGridView2.CurrentRow.Cells["Date"].Value.ToString();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Assuming "Date" is the name of the column containing dates
+                if (bunifuDataGridView2.Columns[e.ColumnIndex].Name == "Date")
+                {
+                    var cellValue = bunifuDataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+
+                    if (cellValue != null)
+                    {
+                        // Define the expected date format here
+                        string dateFormat = "MM/dd/yyyy"; // Adjust this format based on your date string
+
+                        if (DateTime.TryParseExact(cellValue.ToString(), dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime selectedDate))
+                        {
+                            guna2DateTimePicker1.Value = selectedDate;
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            }
+
+
+            UpdateOtherControls();
+        }
+
+        private void UpdateOtherControls()
+        {
             cmb_material.Text = bunifuDataGridView2.CurrentRow.Cells["Material"].Value.ToString();
-            cmb_mcategory.Text = bunifuDataGridView2.CurrentRow.Cells["Material Category"].Value.ToString();
+            cmb_mcategory.Text = bunifuDataGridView2.CurrentRow.Cells["Material_Category"].Value.ToString();
             cmb_unit.Text = bunifuDataGridView2.CurrentRow.Cells["Unit"].Value.ToString();
             txt_quantity.Text = bunifuDataGridView2.CurrentRow.Cells["Quantity"].Value.ToString();
         }

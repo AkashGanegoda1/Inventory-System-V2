@@ -27,7 +27,7 @@ namespace Inventory_System
             }
             else if (txt_newpass.Text == txt_cnewpass.Text)
             {
-                db.cmd = new System.Data.SqlClient.SqlCommand("UPDATE Login SET password = '" + txt_cnewpass.Text + "'WHERE username ='" + txt_username.Text + "'", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("UPDATE Login SET password = '" + txt_cnewpass.Text + "'WHERE username ='" + txt_username.Text + "'", db.con);
                 db.con.Open();
                 int i = db.cmd.ExecuteNonQuery();
                 db.con.Close();

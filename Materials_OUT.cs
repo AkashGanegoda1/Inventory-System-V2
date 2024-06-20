@@ -26,7 +26,7 @@ namespace Inventory_System
             try
             {
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand("SELECT DISTINCT Material FROM Stock", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("SELECT DISTINCT Material FROM Stock", db.con);
                 db.dr = db.cmd.ExecuteReader();
                 while (db.dr.Read())
                 {
@@ -79,7 +79,7 @@ namespace Inventory_System
             try
             {
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand("Insert into Materials_OUT values ('" + guna2DateTimePicker1.Value.ToString("MM/dd/yyyy hh:mm tt") + "','" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_availableQuantity.Text + "','" + txt_quantityout.Text + "')", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("Insert into Materials_OUT values ('" + guna2DateTimePicker1.Value.ToString("MM/dd/yyyy hh:mm tt") + "','" + cmb_material.Text + "','" + cmb_mcategory.Text + "','" + cmb_unit.Text + "','" + txt_availableQuantity.Text + "','" + txt_quantityout.Text + "')", db.con);
                 int a = db.cmd.ExecuteNonQuery();
                 db.con.Close();
                 Pro_Load();
@@ -91,38 +91,34 @@ namespace Inventory_System
 
             try
             {
-                // Open the connection
+                // Open the connection if it's closed
                 if (db.con.State == ConnectionState.Closed)
                 {
                     db.con.Open();
                 }
 
-                // Execute the first query
-                db.cmd = new System.Data.SqlClient.SqlCommand("SELECT Avilable_Quantity FROM Stock", db.con);
+                // Execute the first query to read Available_Quantity
+                db.cmd = new System.Data.SQLite.SQLiteCommand("SELECT Avilable_Quantity FROM Stock WHERE Material_Category = @Material_Category", db.con);
+                db.cmd.Parameters.Add("@Material_Category", DbType.String, 40).Value = cmb_mcategory.Text;
+
                 db.dr = db.cmd.ExecuteReader();
+
+                int currentQuantity = 0;
 
                 if (db.dr.Read())
                 {
-                    db.dr.Close(); // Close the data reader
-
-                    // Ensure the connection is still open
-                    if (db.con.State == ConnectionState.Closed)
-                    {
-                        db.con.Open();
-                    }
-
-                    // Prepare and execute the update query
-                    db.cmd = new System.Data.SqlClient.SqlCommand(
-                        "UPDATE Stock SET Avilable_Quantity = (f.Avilable_Quantity - @Quantity_Out) FROM Stock f WHERE f.Material_Category = @Material_Category",
-                        db.con
-                    )
-                    {
-                        CommandType = CommandType.Text
-                    };
-                    db.cmd.Parameters.Add("@Quantity_Out", SqlDbType.Int).Value = int.Parse(txt_quantityout.Text);
-                    db.cmd.Parameters.Add("@Material_Category", SqlDbType.VarChar, 40).Value = cmb_mcategory.Text;
-                    db.cmd.ExecuteNonQuery();
+                    // Read the current Available_Quantity
+                    currentQuantity = Convert.ToInt32(db.dr["Avilable_Quantity"]);
                 }
+
+                db.dr.Close(); // Close the data reader
+
+                // Prepare and execute the update query
+                db.cmd = new System.Data.SQLite.SQLiteCommand("UPDATE Stock SET Avilable_Quantity = Avilable_Quantity - @Quantity_Out WHERE Material_Category = @Material_Category", db.con);
+                db.cmd.Parameters.Add("@Material_Category", DbType.String, 40).Value = cmb_mcategory.Text;
+                db.cmd.Parameters.Add("@Quantity_Out", DbType.Int32).Value = int.Parse(txt_quantityout.Text);
+
+                db.cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -138,11 +134,12 @@ namespace Inventory_System
                 }
             }
 
+
         }
 
         private void Cmb_material_SelectedIndexChanged(object sender, EventArgs e)
         {
-            db.cmd = new System.Data.SqlClient.SqlCommand("SELECT Material_Category FROM Stock WHERE Material ='" + cmb_material.Text + "'", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("SELECT Material_Category FROM Stock WHERE Material ='" + cmb_material.Text + "'", db.con);
             db.con.Open();
             db.dr = db.cmd.ExecuteReader();
             cmb_mcategory.Items.Clear();
@@ -165,7 +162,7 @@ namespace Inventory_System
 
         private void Cmb_mcategory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            db.cmd = new System.Data.SqlClient.SqlCommand("Select * from Stock where Material_Category='" + cmb_mcategory.Text + "'", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("Select * from Stock where Material_Category='" + cmb_mcategory.Text + "'", db.con);
             db.con.Open();
             db.cmd.ExecuteNonQuery();
             db.dr = db.cmd.ExecuteReader();

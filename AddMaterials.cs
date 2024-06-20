@@ -48,7 +48,7 @@ namespace Inventory_System
                 return;
             }
 
-            db.cmd = new System.Data.SqlClient.SqlCommand("Insert into Materials values('" + txt_material.Text + "','" + txt_material_category.Text + "')", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("Insert into Materials values('" + txt_material.Text + "','" + txt_material_category.Text + "')", db.con);
             db.con.Open();
             int i = db.cmd.ExecuteNonQuery();
             if (i == 1)
@@ -85,7 +85,7 @@ namespace Inventory_System
             try
             {
                 db.con.Open();
-                db.cmd = new System.Data.SqlClient.SqlCommand("Update Materials set Material_Category= '" + txt_material_category.Text + "' where Material='" + txt_material.Text + "'", db.con);
+                db.cmd = new System.Data.SQLite.SQLiteCommand("Update Materials set Material_Category= '" + txt_material_category.Text + "' where Material='" + txt_material.Text + "'", db.con);
                 int i = db.cmd.ExecuteNonQuery();
                 if (i == 1)
                 {
@@ -127,7 +127,7 @@ namespace Inventory_System
 
 
             db.con.Open();
-            db.cmd = new System.Data.SqlClient.SqlCommand("delete from Materials where Material= '" + txt_material.Text + "'", db.con);
+            db.cmd = new System.Data.SQLite.SQLiteCommand("delete from Materials where Material_Category= '" + txt_material_category.Text + "'", db.con);
             int i = db.cmd.ExecuteNonQuery();
             db.con.Close();
             db.cmd.Dispose();

@@ -1,20 +1,26 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data.SQLite;
 using System.Data;
+using System.IO;
+using System.Reflection;
+
 
 
 namespace Inventory_System
 {
     internal class DBConnection
     {
-        public SqlConnection con;
-        public SqlCommand cmd;
-        public SqlDataAdapter da;
+        public SQLiteConnection con;
+        public SQLiteCommand cmd;
+        public SQLiteDataAdapter da;
         public DataTable dt;
-        public SqlDataReader dr;
+        public SQLiteDataReader dr;
 
         public DBConnection()
         {
-            con = new SqlConnection("Data Source=SKYLINE-PRO\\SQLEXPRESS;Initial Catalog=INVENTORY;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+            string dbFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "inventory.db");
+            con = new SQLiteConnection($"Data Source={dbFilePath};Version=3;");
+
+
         }
         public void OpenConnection()
         {
@@ -34,7 +40,7 @@ namespace Inventory_System
         public DataTable GetData(string a)
         {
             OpenConnection();
-            da = new SqlDataAdapter(a, con);
+            da = new SQLiteDataAdapter(a, con);
             dt = new DataTable();
             da.Fill(dt);
             CloseConnection();

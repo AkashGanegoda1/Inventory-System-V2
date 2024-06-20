@@ -80,7 +80,7 @@ namespace Inventory_System
                 }
                 
                 string query = "Select * from Login where username = '" + txt_userid.Text + "' and password = '" + txt_password.Text + "'";
-                db.da = new System.Data.SqlClient.SqlDataAdapter(query, db.con);
+                db.da = new System.Data.SQLite.SQLiteDataAdapter(query, db.con);
                 db.dt = new System.Data.DataTable();
                 db.da.Fill(db.dt);
                 if (db.dt.Rows.Count == 1)
